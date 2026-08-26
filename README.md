@@ -103,6 +103,15 @@ The `date` column was originally stored as text. The values were converted from 
 
 This ensures that the date column can be used correctly for time-based analysis during the EDA phase.
 
+### Converting Numeric Columns
+
+The `total_laid_off` and `funds_raised` columns were originally stored as text. Their values were inspected before changing the datatypes.
+
+* Empty strings in `total_laid_off` were converted to `NULL`, and the column was changed to `INT` because the number of employees is a whole-number value.
+* Empty strings in `funds_raised` were converted to `NULL`, and the column was changed to `DECIMAL(10,4)` to preserve values containing decimal places.
+
+This ensures that both columns can be used correctly for numerical calculations during the EDA phase.
+
 ### Handling Missing Values
 
 Missing and blank values were investigated to determine whether they could be reliably populated.

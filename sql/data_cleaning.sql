@@ -89,6 +89,30 @@ select count(*) as remaining_missing_layoff_records from layoffs_staging2
 where (total_laid_off is null or total_laid_off = '')
 and (percentage_laid_off is null or percentage_laid_off = ''); -- verify that those rows with blank values are gone
   
+  
+-- Converting total_laid_off from text to integer;
 
-   
- 
+update layoffs_staging2
+set total_laid_off = null
+where total_laid_off = ''; -- converted empty strings to NULL before changing the datatype
+
+alter table layoffs_staging2
+modify column total_laid_off int; -- changed datatype from text to INT
+
+
+-- Converting funds_raised from text to decimal;
+
+select distinct funds_raised
+from layoffs_staging2
+order by 1; -- checked values to determine the appropriate numeric datatype
+
+select count(*)
+from layoffs_staging2
+where funds_raised = ''; -- checked for empty strings
+
+update layoffs_staging2
+set funds_raised = null
+where funds_raised = ''; -- converted empty strings to NULL before changing the datatype
+
+alter table layoffs_staging2
+modify column funds_raised decimal(10,4); -- changed datatype from text to DECIMAL to preserve decimal values
