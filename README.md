@@ -212,7 +212,7 @@ The analysis was then expanded to examine how layoffs were distributed across di
 
 The total number of recorded layoffs was calculated for each industry using `SUM(total_laid_off)` and grouped by `industry`.
 
-```sql id="f0jz4u"
+```sql
 SELECT industry, SUM(total_laid_off)
 FROM layoffs_staging2
 GROUP BY industry
@@ -229,7 +229,7 @@ The analysis was then used to examine how layoffs were distributed across differ
 
 The total number of recorded layoffs was calculated for each country using `SUM(total_laid_off)` and grouped by `country`.
 
-```sql id="7x4y2m"
+```sql
 SELECT country, SUM(total_laid_off)
 FROM layoffs_staging2
 GROUP BY country
@@ -246,7 +246,7 @@ The next analysis examined how the total number of recorded layoffs changed from
 
 The `YEAR()` function was used to extract the year from the `date` column, and the total layoffs were calculated for each year.
 
-```sql id="z9h1qv"
+```sql
 SELECT YEAR(date), SUM(total_laid_off)
 FROM layoffs_staging2
 GROUP BY YEAR(date)
@@ -265,7 +265,7 @@ The analysis was then expanded to examine the total number of recorded layoffs b
 
 The total layoffs were calculated for each `stage` using `SUM(total_laid_off)`.
 
-```sql id="1p6r8k"
+```sql
 SELECT stage, SUM(total_laid_off)
 FROM layoffs_staging2
 GROUP BY stage
@@ -282,7 +282,7 @@ The next analysis examined how layoffs were distributed over time at a monthly l
 
 The year and month were extracted from the `date` column using `SUBSTRING()`, and the total number of recorded layoffs was calculated for each month.
 
-```sql id="r4m2sx"
+```sql
 SELECT SUBSTRING(date, 1, 7) AS month, SUM(total_laid_off)
 FROM layoffs_staging2
 WHERE SUBSTRING(date, 1, 7) IS NOT NULL
@@ -300,7 +300,7 @@ After examining layoffs by month, a cumulative total was calculated to show how 
 
 A Common Table Expression (CTE) was used to first calculate total layoffs for each month. A window function with `SUM() OVER()` was then used to calculate the cumulative total.
 
-```sql id="v5n3qx"
+```sql
 WITH monthly_layoffs AS 
 (
     SELECT SUBSTRING(date, 1, 7) AS month,
@@ -383,7 +383,7 @@ The final analysis in this part of the EDA focused on identifying the companies 
 
 A Common Table Expression (CTE) was first used to calculate the total layoffs for each company in each year. `DENSE_RANK()` was then used to rank companies within each year based on their total layoffs.
 
-```sql id="e8k3qa"
+```sql
 WITH company_year (company, years, total_laid_off) AS 
 (
     SELECT company,
